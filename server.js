@@ -44,7 +44,7 @@ const searchMiddleWare = (req, res, next) => {
       const filteredPosts = posts.filter(
         // loop over posts
         // filter out any, that do not match our query string.
-        user => post.name.toLowerCase() === post.toLowerCase()
+        post => post.name.toLowerCase() === post.toLowerCase()
       );
       // save the filtered users on req.users.
       req.posts = filteredPosts;
