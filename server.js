@@ -1,12 +1,15 @@
 const express = require('express');
 
+const postsRouter = require('./posts/posts-router.js');
+
 const cors = require('cors');
 
-const db = require('./data/db');
+const db = require('./posts/posts-model.js');
 
 const server = express();
 
 server.use(express.json()); // This middleware (express.json()) is used to parse data coming in
+
 server.use(cors({ origin: 'http://localhost:3000' })); // cors is used to enable communication from other ports/URLs
 
 const sendUserError = (status, message, res) => {
@@ -36,15 +39,15 @@ const searchMiddleWare = (req, res, next) => {
   }
   db
     .find()
-    .then(users => {
-      const { name } = req.query; // take query string
-      const filteredUsers = users.filter(
-        // loop over users
+    .then(posts => {
+      const { title } = req.query; // take query string
+      const filteredPosts = posts.filter(
+        // loop over posts
         // filter out any, that do not match our query string.
-        user => user.name.toLowerCase() === name.toLowerCase()
+        user => post.name.toLowerCase() === post.toLowerCase()
       );
       // save the filtered users on req.users.
-      req.users = filteredUsers;
+      req.posts = filteredPosts;
       next();
     })
     .catch(err => {
@@ -58,19 +61,21 @@ server.get('/', searchMiddleWare, (req, res) => {
   // 2nd req.params
   // 3nd req.query
   console.log(req.query);
-  console.log(req.users);
-  const { users } = req;
-  if (!users) {
+  console.log(req.posts);
+  const { posts } = req;
+  if (!posts) {
     res.json('Welcome to express');
   }
-  if (users.length === 0) {
-    sendUserError(404, `No ${req.query.name} in our database`, res);
+  if (posts.length === 0) {
+    sendUserError(404, `No ${req.query.title} in our database`, res);
     return;
   } else {
-    res.json({ users });
+    res.json({ posts });
   }
   // 1st arg: route where a resource can be interacted with
   // 2nd arg: callback to deal with sending responses, and handling incoming data.
 });
+
+server.use('/api/posts', postsRouter);
 
 module.exports = server;
