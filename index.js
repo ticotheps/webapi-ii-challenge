@@ -25,20 +25,20 @@ server.get('/api/posts', (req, res) => {
 });
 
 
-// server.get('/api/posts/:id', (req, res) => {
-//     const id = req.params.id;
-//     db.findById(id)
-//         .then(user => {
-//             // 200-299 = success
-//             // 300-399 = rediret
-//             // 400-499 = client error
-//             // 500-599 = server error
-//             res.status(200).json(user);
-//         })
-//         .catch(error => {
-//             res.status(500).json({ message: 'error returning user with matching id' });
-//         });
-// });
+server.get('/api/posts/:id', (req, res) => {
+    const id = req.params.id;
+    db.findById(id)
+        .then(post => {
+            // 200-299 = success
+            // 300-399 = rediret
+            // 400-499 = client error
+            // 500-599 = server error
+            res.status(200).json(post);
+        })
+        .catch(error => {
+            res.status(500).json({ message: 'error returning post with matching id' });
+        });
+});
 
 
 // server.post('/api/posts', (req, res) => {
