@@ -12,15 +12,15 @@ server.get('/', (req, res) => {
 
 server.get('/api/posts', (req, res) => {
     db.find()
-        .then(users => {
+        .then(posts => {
             // 200-299 = success
             // 300-399 = rediret
             // 400-499 = client error
             // 500-599 = server error
-            res.status(200).json(users);
+            res.status(200).json(posts);
         })
         .catch(error => {
-            res.status(500).json({ error: "The users information could not be retrieved." });
+            res.status(500).json({ error: "The posts data could not be retrieved." });
         });
 });
 
