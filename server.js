@@ -2,7 +2,7 @@ const express = require('express');
 
 const postsRouter = require('./posts/posts-router.js');
 
-const cors = require('cors');
+// const cors = require('cors');
 
 const db = require('./posts/posts-model.js');
 
@@ -10,7 +10,7 @@ const server = express();
 
 server.use(express.json()); // This middleware (express.json()) is used to parse data coming in
 
-server.use(cors({ origin: 'http://localhost:3000' })); // cors is used to enable communication from other ports/URLs
+// server.use(cors({ origin: 'http://localhost:3000' })); // cors is used to enable communication from other ports/URLs
 
 const sendUserError = (status, message, res) => {
   // This is just a helper method that we'll use for sending errors when things go wrong.
